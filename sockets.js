@@ -7,14 +7,14 @@ function listen(io) {
 
     console.log("User Connected", socket.id);
     socket.on("ready", () => {
-      room = "room" + readyPlayerCount / 2;
+      room = "room" + Math.floor(readyPlayerCount / 2);
       socket.join(room);
 
       console.log("Player Ready", socket.id);
 
       readyPlayerCount++;
 
-      if (readyPlayerCount % 2) {
+      if (readyPlayerCount % 2 === 0) {
         // broadcast('startGame')
         pongNamespace.in(room).emit("startGame", socket.id);
       }
